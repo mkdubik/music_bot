@@ -21,6 +21,9 @@ class MusicBot(object):
 			'mixcloud',
 		]
 
+
+	#def push_2_host(self):
+
 	def read_urls(self):
 		with open(self.DATABASE, 'a+') as fd:
 			try:
@@ -34,14 +37,14 @@ class MusicBot(object):
 
 	def youtube(self, urls):
 		ydl_opts = {
-		    'format': 'bestaudio/best',
-		    'postprocessors': [{
-		        'key': 'FFmpegExtractAudio',
-		        'preferredcodec': 'mp3',
-		        'preferredquality': '192',
-		    }],
+			'format': 'bestaudio/best',
+			'postprocessors': [{
+				'key': 'FFmpegExtractAudio',
+				'preferredcodec': 'mp3',
+				'preferredquality': '192',
+			}],
 			'outtmpl': self.PATH + '%(title)s.%(ext)s',
-		    'max_filesize': self.GIGABYTE,
+			'max_filesize': self.GIGABYTE,
 			'updatetime': False,
 			'prefer_ffmpeg': True,
 			'ignoreerrors': True,
@@ -61,6 +64,7 @@ class MusicBot(object):
 		if jobs:
 			self.youtube(jobs)
 			self.write_urls(jobs)
+		os.system('rm ' + self.PATH + '*.m4a')
 
 if __name__ == '__main__':
 	_subreddits = [
