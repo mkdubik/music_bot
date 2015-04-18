@@ -15,7 +15,7 @@ class MusicBot(object):
 		self.PATH = PATH
 		self.DATABASE = os.environ['MUSIC_BOT'] + '/urls.json'
 		self.GIGABYTE = 1000000000
-		self.supported_sites = [
+		self.SUPPORTED = [
 			'youtube',
 			'soundcloud',
 			'mixcloud',
@@ -55,7 +55,7 @@ class MusicBot(object):
 
 		submissions = praw.Reddit(user_agent='Awesome Music').get_subreddit(sys.argv[1]).get_hot(limit=100)
 		for x in submissions:
-			if not x.url in urls and x.url in supported_sites:
+			if not x.url in urls and any(u in x.url for u in self.SUPPORTED):
 				jobs.append(x.url)
 
 		if jobs:
