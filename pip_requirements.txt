@@ -1,2 +1,3 @@
 praw==2.1.21
 youtube-dl
+fabric

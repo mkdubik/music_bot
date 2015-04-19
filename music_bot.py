@@ -2,12 +2,16 @@
 # -*- coding: utf-8 -*-
 
 from pdb import set_trace
+import getpass
 import praw
 import youtube_dl
 import os
 import sys
 import json
 import zlib
+import socket
+from fabric.api import run, env
+
 
 class MusicBot(object):
 
@@ -21,8 +25,18 @@ class MusicBot(object):
 			'mixcloud',
 		]
 
+	def update_urls(self):
+		if 'zeus' == socket.gethostname():
+			return
 
-	#def push_2_host(self):
+		env.user = getpass.getuser()
+		env.key_filename = os.environ['ZEUS_KEY']
+		env.port = 22
+
+		with settings(host_string = '%s:22' % os.environ['ZEUS']):
+			print 'Enter'
+			set_trace()
+
 
 	def read_urls(self):
 		with open(self.DATABASE, 'a+') as fd:
@@ -53,6 +67,7 @@ class MusicBot(object):
 			ydl.download(urls)
 
 	def run(self):
+		self.update_urls()
 		urls = self.read_urls()
 		jobs = []
 
