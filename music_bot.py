@@ -25,7 +25,7 @@ class MusicBot(object):
 			'mixcloud',
 		]
 
-	def update_urls(self):
+	def get_urls_from_zeus(self):
 		if 'zeus' == socket.gethostname():
 			return
 
@@ -36,6 +36,10 @@ class MusicBot(object):
 		with settings(host_string = '%s:22' % os.environ['ZEUS']):
 			print 'Enter'
 			set_trace()
+
+	def save_urls_to_zeus(self):
+		if 'zeus' == socket.gethostname():
+			return
 
 
 	def read_urls(self):
